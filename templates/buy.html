@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            var float_price = {{ float_price }};
+            calcular();
+        });
+
+    function calcular() {
+        var shares = parseFloat(document.getElementById('shares').value) || 1;
+        var total = shares * {{ float_price }};
+        var float_total = parseFloat(total);
+        var float_cash = {{ float_cash }};
+        if (parseInt(shares) > 0 && float_total <= float_cash ) {
+            const numero = total.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'});
+            document.getElementById('total').value = numero;
+        }
+    }
+
+    function adicionar() {
+        var shares = parseFloat(document.getElementById('shares').value) || 0;
+        var float_cash = {{ float_cash }};
+        var float_price = {{ float_price }};
+        var total = parseFloat((shares + 1) * float_price);
+        if (total < float_cash) {
+            shares += 1;
+        }
+        document.getElementById('shares').value = shares;
+        calcular(); // Recalcular o resultado
+      }
+
+    function subtrair() {
+        var shares = parseFloat(document.getElementById('shares').value) || 0;
+        if (shares > 1) {
+            shares -= 1;
+        }
+        document.getElementById('shares').value = shares;
+        calcular(); // Recalcular o resultado
+    }
+
+</script>
+{% endblock %}
+
+{% block title %}
+Buy
+{% endblock %}
+
+{% block main %}
+<form action="/buy" method="post">
+    <div class="mb-3">
+        <h3><label for="symbol" class="form-label">Buy a stock</label></h3>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol"
+            placeholder="Search a symbol" type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+<div class="mb-3">
+    <br>
+</div>
+{% if symbol %}
+<form action="/bought" method="post">
+    <div class="mb-3">
+    <table class="table">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col">Symbol</th>
+                <th scope="col">Price</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Total Order</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-light">
+                <td name="symbol">{{ symbol }}</td>
+                <td name="price" id="price">{{ price }}</td>
+                <td class="td-flex">
+                    <input id="shares" autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares"
+                            placeholder="1" value="1" type="number" max="{{ max_shares }}" min="1" onblur="calcular()"
+                            oninput="calcular()">
+                    <button class="btn btn-outline-dark" type="button" onclick="adicionar()"
+                            style="--bs-btn-padding-y: 0.9px; --bs-btn-padding-x: 6px; --bs-btn-font-size: 15px;">+</button>
+                    <button class="btn btn-outline-dark" type="button" onclick="subtrair()"
+                            style="--bs-btn-padding-y: 0.9px; --bs-btn-padding-x: 8px; --bs-btn-font-size: 15px;">-</button>
+                </td>
+                <td name="total">
+                    <input id="total" class="form-control mx-auto w-auto" name="total"
+                            placeholder="0" type="text" max="1" min="1" onblur="calcular()" readonly disabled">
+                    <input class="form-control mx-auto w-auto" name="symbol" type="hidden" value={{ symbol }}>
+                    <input class="form-control mx-auto w-auto" name="float_price" type="hidden" value={{ float_price }}>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<button class="btn btn-success" type="submit">Buy</button>
+</form>
+{% endif %}
+{% endblock %}

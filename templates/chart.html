@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Chart
+{% endblock %}
+
+{% block main %}
+  <form action="/chart" method="post">
+    <div class="mb-3">
+        <h3><label for="symbol" class="form-label">Stock to chart</label></h3>
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol"
+            placeholder="Search a symbol" type="text">
+    </div>
+    <button class="btn btn-primary" type="submit">Chart</button>
+</form>
+<div class="mb-3">
+    <br>
+</div>
+{% if symbol %}
+    <div class="mb-3">
+        <table class="table">
+            <thead>
+                <tr class="table-light">
+                    <th scope="col">{{ symbol }}</th>
+                </tr>
+            </thead>
+
+            <br>
+            <tbody>
+                <tr>
+                    <td><img src="{{ image }}" alt="Stock Chart"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endif %}
+{% endblock %}

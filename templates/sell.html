@@ -1,0 +1,135 @@
+{% extends "layout.html" %}
+
+{% block script %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+            calcular(id);
+        });
+
+    function calcular(id) {
+        var text_shares = "shares_" + id;
+        var text_sell_shares = "sell_shares_" + id;
+        var text_total = "sell_total_" + id;
+        var text_float_price = "float_price_" + id;
+        var sell_shares = parseFloat(document.getElementById(text_sell_shares).value) || 0;
+        var float_price = parseFloat(document.getElementById(text_float_price).value) || 0;
+        var total = parseFloat(sell_shares * float_price);
+        var text_purchaced_shares = "shares_" + id;
+        purchaced_shares = parseFloat(document.getElementById(text_purchaced_shares).value) || 0;
+        var float_cash = {{ float_cash }};
+        var float_total = parseFloat(total);
+
+        if (parseInt(sell_shares) <= parseInt(purchaced_shares)) {
+            const numero = total.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'});
+            document.getElementById(text_total).value = numero;
+        }
+
+    }
+
+
+    function adicionar(id) {
+        var text_sell_shares = "sell_shares_" + id;
+        var text_purchaced_shares = "shares_" + id;
+        sell_shares = parseFloat(document.getElementById(text_sell_shares).value) || 0;
+        purchaced_shares = parseFloat(document.getElementById(text_purchaced_shares).value) || 0;
+        if (sell_shares < purchaced_shares) {
+            sell_shares += 1;
+        }
+        document.getElementById(text_sell_shares).value = sell_shares;
+        calcular(id); // Recalcular o resultado
+      }
+
+    function subtrair(id) {
+        var text_sell_shares = "sell_shares_" + id;
+        sell_shares = parseFloat(document.getElementById(text_sell_shares).value) || 0;
+        if (sell_shares > 0) {
+            sell_shares -= 1;
+        }
+        document.getElementById(text_sell_shares).value = sell_shares;
+        calcular(id); // Recalcular o resultado
+    }
+
+</script>
+{% endblock %}
+
+{% block title %}
+Sell
+{% endblock %}
+
+{% block main %}
+    <div class="mb-3">
+        <h3><label for="symbol" class="form-label">Sell your shares</label></h3>
+    </div>
+<div class="mb-3">
+    <br>
+</div>
+{% if orders %}
+    <form action="/sell" method="post" id="sell_form">
+        <div class="mb-3">
+            <table class="table">
+                <thead>
+                    <tr class="table-secondary">
+                        <th scope="col">Symbol</th>
+                        <th scope="col">Shares Purchased</th>
+                        <th scope="col">Current Price</th>
+                        <th scope="col">Shares To Sell</th>
+                        <th scope="col">Total Sale</th>
+                    </tr>
+                </thead>
+                {% for order in orders %}
+                    <tbody>
+                        <tr class="table-light">
+                            <td name="symbol" id="symbol">{{ order.symbol }}</td>
+                            <td name="shares" id="shares">{{ order.shares }}</td>
+                            <td name="current_price" id="current_price">{{ order.current_price }}</td>
+                            <td class="td-flex">
+                                <input id="sell_shares_{{ order.id }}" autocomplete="off" autofocus class="form-control mx-auto w-auto "
+                                    name="sell_shares_{{ order.id }}" placeholder="0" value="0" type="number" max="{{ order.shares }}"
+                                    min="0" onblur="calcular({{ order.id }})" oninput="calcular({{ order.id }})">
+                                <button class="btn btn-outline-dark" type="button" onclick="adicionar({{ order.id }})"
+                                    style="--bs-btn-padding-y: 1.9px; --bs-btn-padding-x: 6px; --bs-btn-font-size: 15px;">+</button>
+                                <button class="btn btn-outline-dark" type="button" onclick="subtrair({{ order.id }})"
+                                    style="--bs-btn-padding-y: 1.9px; --bs-btn-padding-x: 8px; --bs-btn-font-size: 15px;">-</button>
+                            </td>
+                            <td name="sell_total_{{ order.id }}">
+                                <input id="sell_total_{{ order.id }}" autocomplete="off" autofocus class="form-control mx-auto w-auto"
+                                    name="sell_total_{{ order.id }}" placeholder="{{ order.sell_total }}" type="text"
+                                    max="{{ order.shares }}" min="0" onblur="calcular({{ order.id }})" readonly disabled">
+                                <input id="sold_shares_{{ order.id }}" class="form-control mx-auto w-auto" name="sold_shares_{{ order.id }}"
+                                    type="hidden" value="0">
+                                <input id="symbol_{{ order.id }}" class="form-control mx-auto w-auto" name="symbol_{{ order.id }}"
+                                    type="hidden" value="{{ order.symbol }}">
+                                <input id="shares_{{ order.id }}" class="form-control mx-auto w-auto" name="shares_{{ order.id }}"
+                                    type="hidden" value="{{ order.shares }}">
+                                <input id="current_price_{{ order.id }}" class="form-control mx-auto w-auto"
+                                    name="current_price_{{ order.id }}" type="hidden" value="{{ order.current_price }}">
+                                <input id="float_price_{{ order.id }}" class="form-control mx-auto w-auto" name="float_price_{{ order.id }}"
+                                    type="hidden" value="{{ order.float_price }}">
+                                <input id="id" class="form-control mx-auto w-auto" name="id"
+                                    type="hidden" value="{{ order.id }}">
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        <button class="btn btn-danger" onclick=verify() type="submit">Sell</button>
+    </form>
+{% else %}
+    <div class="mb-3">
+        <table class="table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Shares Purchased</th>
+                    <th scope="col">Current Price</th>
+                    <th scope="col">Shares To Sell</th>
+                    <th scope="col">Total Sale</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+{% endif %}
+{% endblock %}

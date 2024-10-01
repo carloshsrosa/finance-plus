@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+<div class="mb-3">
+    {% if orders %}
+        <h3>Your Orders</h3>
+    {% endif %}
+</div>
+<div class="mb-3">
+    <table class="table">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col">Action</th>
+                <th scope="col">Symbol</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price</th>
+                <th scope="col">Data & Time</th>
+                <th scope="col">Bank Transactions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr class="table-light">
+                    <td name="symbol">{{ order.tx_type }}</td>
+                    <td name="symbol">{{ order.symbol }}</td>
+                    <td name="shares">{{ order.shares }}</td>
+                    <td name="price">{{ order.price }}</td>
+                    <td name="symbol">{{ order.timestamp }}</td>
+                    {% if order.float_amount < 0 %}
+                        <td name="amount"><p class="text-danger">{{ order.amount }} D</p></td>
+                    {% else %}
+                        <td name="amount"><p class="text-success">{{ order.amount }} C</p></td>
+                    {% endif %}
+                 </tr>
+             {% endfor %}
+            </tbody>
+    </table>
+</div>
+{% endblock %}

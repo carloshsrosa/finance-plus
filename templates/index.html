@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Your Wallet
+{% endblock %}
+
+{% block main %}
+<div class="mb-3">
+    {% if orders %}
+        <h3>Your Stocks</h3>
+    {% endif %}
+</div>
+<div class="mb-3">
+    <table class="table">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col">Symbol</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Current Value</th>
+                <th scope="col" colspan=3 >Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr class="table-light">
+                    <td name="symbols">{{ order.symbol }}</td>
+                    <td name="shares">{{ order.shares }}</td>
+                    <td name="price">{{ order.amount }}</td>
+                    <form action="/buy" method="post">
+                        <td>
+                            <input class="form-control mx-auto w-auto" name="symbol" type="hidden" value="{{ order.symbol }}">
+                            <button class="btn btn-success" type="submit">Buy</button>
+                        </td>
+                    </form>
+                    <form action="/sell">
+                        <td name="sell">
+                            <button class="btn btn-danger" type="submit">Sell</button>
+                        </td>
+                    </form>
+                    <form action="/chart" method="post">
+                        <td>
+                            <input class="form-control mx-auto w-auto" name="symbol" type="hidden" value="{{ order.symbol }}">
+                            <button class="btn btn-primary" type="submit">Chart</button>
+                        </td>
+                    </form>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
