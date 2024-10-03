@@ -19,6 +19,13 @@
         <div class="mb-3">
             <p></p>
             <h5><p scope="col">{{ symbol }}: {{ price }}</p></h5>
+            <form action="/buy" method="post">
+            <td>
+                <input class="form-control mx-auto w-auto" name="symbol" type="hidden" value="{{ symbol }}">
+                <button class="btn btn-success" type="submit">Buy</button>
+            </td>
         </div>
+    </form>
+
     {% endif %}
 {% endblock %}
