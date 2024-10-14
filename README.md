@@ -25,7 +25,6 @@ The project is organized into several directories and files, each serving a spec
   - `quote.html`: This page allows users to check the real-time price of a stock. The user inputs a stock ticker symbol, and the app fetches and displays the latest price using an external API.
   - `register.html`: The page where new users can sign up for an account. This form typically collects information like username, email, and password, which are stored in the database for future logins.
   - `sell.html`: Similar to `buy.html`, this page is used to sell stocks. Users can select a stock they own and choose how many shares to sell.
-  - `teste.html`: This is likely a test page used during development for experimenting with new features or debugging. It can be repurposed for testing new functionality before deploying it to the main app.
 
 - **`app.py`**: The main entry point for the Flask application. This file defines the routes (URLs) for the app and connects them to the appropriate functions. Each function renders a template or returns data to the user. For example, there may be a route for the homepage (`/`), one for checking stock quotes (`/quote`), and others for buying and selling stocks. This file also contains the configuration settings for the app, including session management and database connections.
 
