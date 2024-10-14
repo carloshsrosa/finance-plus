@@ -1,5 +1,6 @@
-# Flask Finance Project
-
+# CS50 Finance Plus!
+#### Video Demo:  <URL HERE>
+#### Description:
 This project is a web application built using **Flask**, a popular Python web framework. The application simulates a finance platform where users can manage fictional stocks. They can register for an account, log in, and perform various stock-related actions such as buying and selling stocks. Additionally, users can view the historical data of their transactions and check real-time stock prices. This project is designed to be a comprehensive learning experience, showcasing key concepts in web development, database management, and user authentication.
 
 ## Folder Structure
