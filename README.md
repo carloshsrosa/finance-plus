@@ -62,6 +62,14 @@ To run this project, you'll need the following:
 - **Flask**: The web framework used for the project. You can install it via `pip`.
 - **SQLite**: The database used to store user and stock data.
 
+## Additional Required Libraries
+
+In addition to the basic Flask setup, this project also requires additional Python libraries for handling data and displaying stock charts:
+
+- **pandas**: Used for data manipulation and analysis. It simplifies working with stock data, making it easier to organize, filter, and process large datasets.
+- **mplfinance**: This library is used to create financial charts such as candlestick charts, which can help visualize stock prices over time. It integrates well with pandas to create attractive visualizations of stock market data.
+- **yfinance**: This library is used to fetch historical market data directly from Yahoo Finance. It simplifies getting up-to-date stock data, which can be used to display stock prices, trends, and charts in the application.
+
 ### Installation Steps
 
 1. Clone the repository to your local machine:
