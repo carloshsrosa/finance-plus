@@ -1,52 +1,69 @@
-# CS50 Finance Plus!
-#### Video Demo:  <URL HERE>
-#### Description:
-This is a web project based on **Flask**, which simulates a finance app where users can manage fictional stocks. The project includes features like buying and selling stocks, transaction history, and checking real-time stock prices.
+# Flask Finance Project
+
+This project is a web application built using **Flask**, a popular Python web framework. The application simulates a finance platform where users can manage fictional stocks. They can register for an account, log in, and perform various stock-related actions such as buying and selling stocks. Additionally, users can view the historical data of their transactions and check real-time stock prices. This project is designed to be a comprehensive learning experience, showcasing key concepts in web development, database management, and user authentication.
 
 ## Folder Structure
 
-- `flask_session/`: Directory where user sessions are stored.
-- `static/`: Contains static files like images and stylesheets.
-  - `favicon.ico`: Website icon.
-  - `l_heart_validator.png`: Image used in the project.
-  - `styles.css`: Stylesheet for the frontend.
-- `templates/`: Directory with HTML files used as templates for rendering.
-  - `apology.html`: Template to display error or apology messages.
-  - `buy.html`: Page for buying stocks.
-  - `chart.html`: Page to display charts.
-  - `history.html`: User's transaction history.
-  - `index.html`: Website homepage.
-  - `layout.html`: Main layout template of the project.
-  - `login.html`: User login page.
-  - `quote.html`: Page to check stock quotes.
-  - `register.html`: Page to register new users.
-  - `sell.html`: Page for selling stocks.
-  - `teste.html`: Test page (used for development or internal tests).
-- `app.py`: Main file of the Flask project, responsible for running the server and handling routes.
-- `databases.py`: Script related to the database, managing communication with the SQLite file.
-- `finance.db`: SQLite database that stores user and transaction information.
-- `helpers.py`: Helper functions used in the app to simplify operations.
-- `README.md`: This file.
-- `requirements.txt`: File with the Python dependencies needed to run the project.
+The project is organized into several directories and files, each serving a specific purpose. Below is a detailed description of the structure:
+
+- **`flask_session/`**: This directory is used to store user session data. In Flask applications, sessions are used to store information about the user across different requests. This directory plays a crucial role in maintaining user authentication and ensuring that users stay logged in as they navigate the website. Flask session data can be stored in different ways (cookies, server-side, or a database), depending on the configuration of the app.
+
+- **`static/`**: This directory contains all static files used by the application. Static files are resources that don’t change dynamically, such as images, stylesheets, and JavaScript files. These files are served directly to the client when requested.
+  - `favicon.ico`: The favicon is a small icon that appears next to the page title in the browser tab. This file defines the favicon for the site.
+  - `l_heart_validator.png`: This is an image file used within the application, potentially for branding or visual elements on the pages.
+  - `styles.css`: The main stylesheet for the project. This file contains CSS rules that define the layout, colors, fonts, and overall appearance of the application. By customizing this file, you can change the look and feel of the website to match your design preferences.
+
+- **`templates/`**: This folder contains all the HTML template files used by the Flask app. Flask uses the Jinja2 templating engine to render HTML templates dynamically. This allows the server to inject data into the HTML before sending it to the user's browser. Below are the specific templates used in the project:
+  - `apology.html`: This template is used to display error messages or apology responses when the user encounters an issue. For instance, if the user tries to access a page they do not have permission for or inputs invalid data, this page will display an appropriate error message.
+  - `buy.html`: This page is where users can buy stocks. It typically contains a form where the user enters the stock ticker and the number of shares they want to purchase. Once the user submits the form, the backend processes the transaction.
+  - `chart.html`: Displays charts for visualizing stock data. This could include graphs showing stock performance over time, helping users make informed decisions about buying or selling stocks.
+  - `history.html`: This template shows a user's transaction history, including all past stock purchases, sales, and the respective dates of each transaction. This is important for users to track their investment performance.
+  - `index.html`: The homepage of the application. This page is typically the first one users see after logging in. It might provide an overview of the user's portfolio, including current stock holdings and account balance.
+  - `layout.html`: The main layout template that all other pages inherit from. This file likely contains the common structure of the site, such as the header, footer, and navigation bar. It helps maintain a consistent look across all pages of the application.
+  - `login.html`: The login page where users can enter their credentials to access their accounts. This form submits the user's email or username and password to the backend for authentication.
+  - `quote.html`: This page allows users to check the real-time price of a stock. The user inputs a stock ticker symbol, and the app fetches and displays the latest price using an external API.
+  - `register.html`: The page where new users can sign up for an account. This form typically collects information like username, email, and password, which are stored in the database for future logins.
+  - `sell.html`: Similar to `buy.html`, this page is used to sell stocks. Users can select a stock they own and choose how many shares to sell.
+  - `teste.html`: This is likely a test page used during development for experimenting with new features or debugging. It can be repurposed for testing new functionality before deploying it to the main app.
+
+- **`app.py`**: The main entry point for the Flask application. This file defines the routes (URLs) for the app and connects them to the appropriate functions. Each function renders a template or returns data to the user. For example, there may be a route for the homepage (`/`), one for checking stock quotes (`/quote`), and others for buying and selling stocks. This file also contains the configuration settings for the app, including session management and database connections.
+
+- **`databases.py`**: This script manages the interactions between the Flask app and the database. It handles tasks such as querying the database for user data, inserting new transactions, and updating stock information. The project uses SQLite as its database, but this script can be adapted to work with other relational databases like PostgreSQL or MySQL if needed.
+
+- **`finance.db`**: The SQLite database file. This is where all user data, stock transactions, and other relevant information are stored. SQLite is a lightweight database, making it ideal for small projects or development environments.
+
+- **`helpers.py`**: This file contains helper functions that are used throughout the application to simplify code. For example, there may be a function to look up stock prices from an external API, a function to calculate the total value of a user's portfolio, or a function to handle user authentication.
+
+- **`README.md`**: This file, which provides an overview of the project and instructions for setting it up and running it.
+
+- **`requirements.txt`**: A list of all the Python dependencies required to run the project. By running `pip install -r requirements.txt`, all necessary libraries (such as Flask, requests, and any others) will be installed.
 
 ## Features
 
-- **Register and Login**: Allows users to sign up and log in to the system.
-- **Stock Quotes**: Users can check stock prices in real-time.
-- **Buy and Sell Stocks**: Users can simulate buying and selling stocks.
-- **Transaction History**: Users can view a history of all transactions made.
-- **Charts**: Displays charts for data visualization.
+This project offers several key features that make it a comprehensive stock trading simulator:
+
+1. **User Registration and Login**: Users can create an account and log in securely. This feature ensures that each user has their own personalized portfolio and transaction history.
+
+2. **Real-Time Stock Quotes**: Users can check the current price of any stock by entering its ticker symbol. This feature is likely powered by an external API that provides up-to-date stock information.
+
+3. **Buy and Sell Stocks**: Once logged in, users can buy and sell stocks. The app calculates the total cost (or profit) based on the number of shares and the stock's current price. Transactions are recorded in the user's history, and their account balance is updated accordingly.
+
+4. **Transaction History**: Users can view a detailed history of all their past transactions, including the date, stock ticker, number of shares, and the price at which they bought or sold the stock.
+
+5. **Data Visualization**: The app provides charts to help users visualize their stock performance over time, making it easier to track gains and losses.
 
 ## How to Run the Project
 
 ### Requirements
 
-- Python 3.7+
-- Flask
-- SQLite
+To run this project, you'll need the following:
 
-### Installation
+- **Python 3.7+**: This project is built using Python, so you need to have Python installed on your machine.
+- **Flask**: The web framework used for the project. You can install it via `pip`.
+- **SQLite**: The database used to store user and stock data.
 
-1. Clone this repository to your local machine:
+### Installation Steps
+
+1. Clone the repository to your local machine:
    ```bash
    git clone https://github.com/carloshsrosa/finance-plus.git
