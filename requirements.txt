@@ -3,3 +3,6 @@ Flask
 Flask-Session
 pytz
 requests
+pandas
+mplfinance
+yfinance
