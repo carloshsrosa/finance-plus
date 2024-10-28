@@ -1,4 +1,7 @@
 # CS50 Finance Plus!
+
+<a href="https://carloshsrosa.github.io/finance-plus/" target="_blank"><img src="https://img.shields.io/badge/-Pages-000000?&logo=github" alt="GitHub Pages"></a>
+
 #### Video Demo:  https://www.loom.com/share/516e865e41c9411c832992ea8c9a6307?sid=c8acc245-ab36-4e76-91a9-10454f6c5c32
 #### Description:
 This project is a web application built using **Flask**, a popular Python web framework. The application simulates a finance platform where users can manage fictional stocks. They can register for an account, log in, and perform various stock-related actions such as buying and selling stocks. Additionally, users can view the historical data of their transactions and check real-time stock prices. This project is designed to be a comprehensive learning experience, showcasing key concepts in web development, database management, and user authentication.
